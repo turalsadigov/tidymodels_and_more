@@ -1,7 +1,7 @@
 ---
 title: "Rent dataset - Sliding windows with slider"
 author: "Tural Sadigov"
-format: html
+format: pdf
 editor: visual
 output: github_document
 date: "`r Sys.Date()`"
@@ -84,7 +84,7 @@ slide_period_dfr(.x = rent_df,
   geom_smooth(se=T)
 ```
 
-## Sliding means. 
+## Sliding means.
 
 We could look at moving averages for each month in local neighborhood.
 
