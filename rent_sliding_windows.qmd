@@ -1,0 +1,134 @@
+---
+title: "Rent dataset - Sliding windows with slider"
+author: "Tural Sadigov"
+format: html
+editor: visual
+output: github_document
+date: "`r Sys.Date()`"
+---
+
+***`DISCLAIMER:`*** This Quarto document is prepared using Julia Silge's [YouTube video](https://www.youtube.com/watch?v=DK4ERlywtUI&t=72s). There are edits here and there.
+
+## Libraries and data
+
+```{r}
+library(tidyverse)
+library(tidytuesdayR)
+library(skimr)
+tuesdata <- tidytuesdayR::tt_load('2022-07-05')
+tuesdata
+```
+
+Take the Rent data.
+
+```{r}
+rent <- tuesdata$rent
+rent
+```
+
+Skim it.
+
+```{r}
+skimr::skim(rent)
+```
+
+Count and plot the number of houses for rent throughout the years.
+
+```{r}
+rent %>% 
+  count(year) %>% 
+  ggplot(aes(year, n)) +
+  geom_point() +
+  geom_line() +
+  geom_smooth(se = F)
+```
+
+Filter out the apartments that only rented out rooms but not the whole house, and look at only years above 2005. Choose few columns only and change the format of the date.
+
+```{r}
+rent_df <- 
+  rent %>% 
+  filter(room_in_apt <1, year>2005) %>% 
+  select(beds, date, price) %>% 
+  mutate(date = lubridate::ymd(date)) %>% 
+  arrange(date)
+skimr::skim(rent_df)
+```
+
+## Not-sliding mean
+
+Look at each month of data, and obtain mean price. Note that this is still not really a sliding window, maybe since windows do not overlap ('jumping' window, maybe?!).
+
+```{r}
+library(slider)
+slide_period_dbl(.x = rent_df, 
+                 .i = rent_df$date, 
+                 .period = 'month', 
+                 .f = ~mean(.x$price))
+```
+
+We could obtain more statistics via 'jumping' windows.
+
+```{r}
+mean_rent <- function(df) {
+  summarise(df, date = min(date), rent = mean(price), n = n())
+}
+
+slide_period_dfr(.x = rent_df, 
+                 .i = rent_df$date, 
+                 .period = 'month', 
+                 .f = mean_rent) %>% 
+  ggplot(aes(date, rent)) +
+  geom_point(size = 1.5, alpha = 0.8) +
+  geom_line(size = 1.5, alpha = 0.8) +
+  geom_smooth(se=T)
+```
+
+## Sliding means. 
+
+We could look at moving averages for each month in local neighborhood.
+
+```{r}
+slide_period_dfr(.x = rent_df, 
+                 .i = rent_df$date, 
+                 .period = 'month', 
+                 .f = mean_rent, 
+                 .before = 3, 
+                 .after = 3) %>% 
+  ggplot(aes(date, rent)) +
+  geom_point(size = 1.5, alpha = 0.8) +
+  geom_line(size = 1.5, alpha = 0.8) +
+  geom_smooth(se=T)
+```
+
+## Different sliding windows
+
+Same idea as above, but this time we will be looking at averages of previous one to six months.
+
+```{r}
+res <- 
+  tibble(.before = 1:6) %>% 
+  mutate(
+    mean_rent = map(
+      .before,
+      ~ slide_period_dfr(.x = rent_df, 
+                 .i = rent_df$date, 
+                 .period = 'month', 
+                 .f = mean_rent, 
+                 .before = .x)
+    )
+  )
+```
+
+```{r}
+res %>% 
+  unnest(mean_rent) %>%   
+  ggplot(aes(date, rent, color = .before, group = .before)) +
+  geom_point(size = 1.5, alpha = 0.8) +
+  geom_line(size = 1.5, alpha = 0.8) +
+  scale_color_viridis_c() +
+  scale_y_continuous(labels = scales::dollar) +
+  labs(x=NULL, y = 'Rent price', color = "Months before \n in sliding window") 
+```
+
+Plot above shows these smoothing effect of averaging.
