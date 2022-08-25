@@ -1,0 +1,840 @@
+---
+title: "Introduction to 'tidymodels' metapackage for Machine Learning"
+format: html
+editor: visual
+output: github_document
+author: 'Tural Sadigov'
+date: "`r Sys.Date()`"
+---
+
+### Libraries and data
+
+Load the main library.
+
+```{r message=FALSE}
+library(tidymodels)
+```
+
+Make sure conflicts are handled by tidymodels
+
+```{r}
+tidymodels_prefer(quiet = T)
+```
+
+Load the data Ames housing data (which some say is the new iris!) from '**modeldata**' package.
+
+```{r}
+library(modeldata) # This is also loaded by the tidymodels package
+data(ames)
+dim(ames)
+```
+
+Lets explore the data set.
+
+```{r eval=FALSE}
+#| eval: false
+glimpse(ames)
+```
+
+**`GOAL:`** Using various other features of houses, we would like to predict the sale price. Since we do have all sale prices in the data, this will be supervised regression algorithm.
+
+### EDA
+
+Distribution of the outcome and log-transformed outcome.
+
+```{r}
+# outcome
+ames %>% 
+  ggplot(aes(x = Sale_Price)) + 
+  geom_histogram(aes(y = ..density..),
+                 bins = 50, 
+                 col= "white") +
+  xlab('Sale Prices ($)') +
+  geom_density(lwd = 1.5,
+               linetype = 1,
+               colour = 2)
+# log-outcome
+ames %>% 
+  ggplot(aes(x = Sale_Price)) + 
+  geom_histogram(aes(y = ..density..), 
+                 bins = 50, 
+                 col= "white") +
+  scale_x_log10() +
+  xlab('Log - Sale Prices ($)') +
+  geom_density(lwd = 1.5,
+               linetype = 1,
+               colour = 2)
+```
+
+Distribution of sale prices depending whether there is a central air or not.
+
+```{r}
+ames %>% 
+  ggplot(aes(x = Sale_Price)) + 
+  geom_histogram(aes(y = ..density..),
+                 bins = 50, 
+                 col= "white") +
+  facet_wrap(~Central_Air) +
+  xlab('Sale Prices ($)') +
+  geom_density(lwd = 1.5,
+               linetype = 1,
+               colour = 2)
+```
+
+Distribution of log-transforemed sale prices depending whether there is a central air or not.
+
+```{r}
+ames %>% 
+  ggplot(aes(x = Sale_Price)) + 
+  geom_histogram(aes(y = ..density..),
+                 bins = 20, 
+                 col= "white") +
+  scale_x_log10() +
+  facet_wrap(~Central_Air) +
+  xlab('Sale Prices ($)') +
+  geom_density(lwd = 1.5,
+               linetype = 1,
+               colour = 2)
+```
+
+Is the outcome normal? Is the log-outcome normal?
+
+```{r}
+ames %>% 
+  ggplot(aes(sample = Sale_Price))+ 
+  stat_qq() +
+  stat_qq_line()
+ames %>% 
+  mutate(Sale_Price = log(Sale_Price)) %>% 
+  ggplot(aes(sample = Sale_Price))+ 
+  stat_qq() +
+  stat_qq_line()
+```
+
+We could also investigate quantile-quantile plot for the sale price and its transformed version for each level of a categorical variable such as whether there is a central air or not in the house.
+
+```{r}
+ames %>% 
+  ggplot(aes(sample = Sale_Price, color = Central_Air))+ 
+  stat_qq() +
+  stat_qq_line()
+ames %>% 
+  mutate(Sale_Price = log(Sale_Price)) %>% 
+  ggplot(aes(sample = Sale_Price, color = Central_Air))+ 
+  stat_qq() +
+  stat_qq_line()
+```
+
+Since log-outcome is more symmetric, particularly in the middle regime, so we will use the transformed sale prices as our new outcome for the rest of the project.
+
+```{r}
+ames <- 
+  ames %>% 
+  mutate(Sale_Price = log10(Sale_Price))
+```
+
+Lets look at geography of the houses. Here we look at the scatterplot of latitude vs longitude, meaning exact physical location.
+
+```{r}
+ames %>% 
+  select(Neighborhood, Longitude, Latitude) %>% 
+  ggplot(aes(x = Longitude, 
+             y = Latitude, 
+             color = Neighborhood)) +
+  geom_point() +
+  theme(legend.position="bottom")
+```
+
+There is a huge gap in the middle that corresponds to Iowa University. Look at regions Northridge and Somerset closely.
+
+```{r}
+ames %>% 
+  select(Neighborhood, Longitude, Latitude) %>% 
+  filter(Neighborhood == 'Northridge' | Neighborhood == 'Somerset') %>% 
+  ggplot(aes(x = Longitude, 
+             y = Latitude, 
+             color = Neighborhood)) +
+  geom_point() +
+  theme(legend.position="bottom")
+```
+
+Look at Crawford.
+
+```{r}
+ames %>% 
+  select(Neighborhood, Longitude, Latitude) %>% 
+  filter(Neighborhood == 'Crawford') %>% 
+  ggplot(aes(x = Longitude,
+             y = Latitude, 
+             color = Neighborhood)) +
+  geom_point() +
+  theme(legend.position="none")
+```
+
+Crawford has this isolated small cluster all the way in south-east. Look at railroad neighborhood.
+
+```{r}
+ames %>% 
+  select(Neighborhood, Longitude, Latitude) %>% 
+  filter(Neighborhood == 'Iowa_DOT_and_Rail_Road') %>% 
+  ggplot(aes(x = Longitude, 
+             y = Latitude, 
+             color = Neighborhood)) +
+  geom_point() +
+  theme(legend.position="none")
+```
+
+Railroad neighborhood has houses in east and south east that is far away from everyone else.
+
+# Data spending (budget)
+
+Lets split the data using stratified sampling where strata are coming from the sale prices, outcome we like to predict.
+
+```{r}
+set.seed(2022)
+ames_split <- initial_split(ames, 
+                            prop = 0.80, 
+                            strata = Sale_Price)
+ames_split
+```
+
+What is this new split object?
+
+```{r}
+typeof(ames_split)
+class(ames_split)
+```
+
+It is an 'rsplit' object. Keep that in mind. We can use tidy function on it.
+
+```{r}
+tidy(ames_split)
+```
+
+Lets use the rsplit object to actually get the split data.
+
+```{r}
+ames_train <- training(ames_split)
+ames_test  <-  testing(ames_split)
+dim(ames_train)
+dim(ames_test)
+ames_split
+```
+
+# Modeling with parsnip
+
+We will fit a linear model to predict sale price of a property as function of only two variables: longitude and latitude.
+
+First, we setup the model specifications.
+
+```{r}
+lm_model <- 
+  linear_reg() %>% 
+  set_engine('lm')
+lm_model
+```
+
+Then, we fit it using my favorite interface, the formula ($y$ vs $x$)!
+
+```{r}
+lm_form_fit <- 
+  lm_model %>% 
+  fit(Sale_Price~Longitude + Latitude, 
+      data = ames_train)
+lm_form_fit
+tidy(lm_form_fit)
+```
+
+Or, we can do the same thing with predictors separate from the outcome, $x/y$ interface.
+
+```{r}
+lm_xy_fit <- 
+  lm_model %>% 
+  fit_xy(x = ames_train %>% select(Longitude, Latitude),
+         y = ames_train %>% pull(Sale_Price))
+lm_xy_fit
+tidy(lm_xy_fit)
+```
+
+Admittedly, one can do it all in one chunk. But separation makes the whole modeling process more modular.
+
+```{r}
+lm_form_fit_tidy <- 
+  linear_reg() %>% 
+  set_engine('lm') %>% 
+  fit(Sale_Price~Longitude + Latitude, 
+      data = ames_train) %>% 
+  tidy()
+lm_form_fit_tidy
+```
+
+## Obtaining the results
+
+Fitted object is a parsnip object, and we might want to extract other info from it.
+
+```{r}
+# extract the fit model
+lm_form_fit %>% 
+  extract_fit_engine()
+```
+
+Summary.
+
+```{r}
+# extract the summmary of the model
+lm_form_fit %>% 
+  extract_fit_engine() %>% 
+  summary()
+```
+
+But probably the best way to look at the coefficients and their statistics, is to use tidy().
+
+```{r}
+tidy(lm_form_fit)
+```
+
+## Predictions
+
+Lets make some predictions. First, slice the first 5 rows of the test set.
+
+```{r}
+ames_test_small <- 
+  ames_test %>% 
+  slice(1:5)
+ames_test_small
+```
+
+Now make predictions.
+
+```{r}
+predict(object = lm_form_fit, 
+        new_data = ames_test_small)
+```
+
+Lets merge these new predictions with the original data.
+
+```{r}
+ames_test_small %>% 
+  select(Sale_Price) %>% 
+  bind_cols(predict(lm_form_fit, 
+                    ames_test_small)) 
+```
+
+We could now examine how well we did in those predictions, plot the preecited values versus the observed values and more.
+
+But for a second, imagine that instead of linear regression model, we would like to fit a decision tree. Look how the modeling process change below.
+
+```{r}
+tree_model <- ##### ONLY DIFFERNCES ARE IN MODEL SPECIFICATIONS
+  decision_tree(min_n = 2) %>% 
+  set_engine("rpart") %>% 
+  set_mode("regression")
+
+tree_fit <- 
+  tree_model %>% 
+  fit(Sale_Price ~ Longitude + Latitude, 
+      data = ames_train)
+
+ames_test_small %>% 
+  select(Sale_Price) %>% 
+  bind_cols(predict(tree_fit, 
+                    ames_test_small)) 
+```
+
+That is, there is only model specification changes. The rest is the same. That uniformity in the modeling for various algorithms is the true power of tidymodels.
+
+# Model WORKFLOW
+
+Create model specifications and add it to the workflow.
+
+```{r}
+lm_model <- 
+  linear_reg() %>% 
+  set_engine("lm")
+lm_wflow <- 
+  workflow() %>% 
+  add_model(lm_model)
+lm_wflow
+```
+
+Add preprocessor.
+
+```{r}
+lm_wflow <- 
+  lm_wflow %>% 
+  add_formula(Sale_Price ~ Longitude + Latitude)
+lm_wflow
+```
+
+Now fit.
+
+```{r}
+lm_fit <- 
+  fit(object = lm_wflow, 
+      data = ames_train)
+lm_fit
+tidy(lm_fit)
+```
+
+Make predictions on TRAINED WORKFLOW.
+
+```{r}
+predict(object = lm_fit, 
+        new_data = ames_test %>% slice(1:5))
+```
+
+## What if we would like to look at more than one model/preprocessor?
+
+We use WORKFLOWSETS! We define various formulas that we are interested in.
+
+```{r}
+location <- list(
+  longitude = Sale_Price ~ Longitude,
+  latitude = Sale_Price ~ Latitude,
+  coords = Sale_Price ~ Longitude + Latitude,
+  neighborhood = Sale_Price ~ Neighborhood
+)
+location
+```
+
+Then use workflowsets package.
+
+```{r}
+library(workflowsets)
+location_models <- workflow_set(preproc = location, 
+                                models = list(lm = lm_model))
+location_models
+```
+
+This is a tibble that contains multiple column-lists. Lets look into one.
+
+```{r}
+location_models$info[[1]]
+```
+
+Even this one is a tibble with column-list. Lets dive in further to see the workflow.
+
+```{r}
+location_models$info[[3]][[1]]
+```
+
+There is an easier way to get to the specific workflow using the following function.
+
+```{r}
+extract_workflow(x = location_models, 
+                 id = "coords_lm")
+```
+
+Let's create model fits for each formula and save them in a new column called `fit`. We'll use basic **dplyr** and **purrr** operations.
+
+```{r}
+location_models <-
+   location_models %>%
+   mutate(fit = map(info, ~ fit(.x$workflow[[1]], 
+                                ames_train)))
+location_models
+location_models$fit[[1]]
+```
+
+\
+Assume that we have concluded our model selection and have a final model. last_fit() function will fit the chosen model to the whole training set (meaning, either validation or resamples from cross validations are joined), and then evaluate the model on the testing set. For that, we need to provide the chosen model/workflow and the original split which is an rsplit object.
+
+```{r}
+final_lm_res <- last_fit(object = lm_wflow, 
+                         split = ames_split)
+final_lm_res
+```
+
+Extract the workflow from previous tibble that has column-lists.
+
+```{r}
+fitted_lm_wflow <- extract_workflow(final_lm_res)
+fitted_lm_wflow
+```
+
+Look at performance metrics and make predictions on the test data.
+
+```{r}
+# metrics
+collect_metrics(final_lm_res)
+# predictions
+collect_predictions(final_lm_res) %>% 
+  slice(1:5)
+```
+
+Admittedly, metrics do not look great for the testing data.
+
+## Using RECIPE package for preprosessing/feature engineering
+
+```{r}
+simple_ames <- 
+  recipe(Sale_Price ~ Neighborhood + Gr_Liv_Area + Year_Built + Bldg_Type,
+         data = ames_train) %>%
+  step_log(Gr_Liv_Area, base = 10) %>% 
+  step_dummy(all_nominal_predictors())
+simple_ames
+```
+
+Add recipe we just created to the lm_wflow, but make sure you remove the old formula/variables so that recipe can have its own formula.
+
+```{r}
+lm_wflow <- 
+  lm_wflow %>% 
+  remove_formula() %>% 
+  add_recipe(simple_ames)
+lm_wflow
+```
+
+Now we fit.
+
+```{r}
+lm_fit <- fit(object = lm_wflow, 
+              data = ames_train)
+print(tidy(lm_fit), n = 10)
+```
+
+We predict using test data, but note that predict automatically uses the same transformations from the training data on the test data.
+
+```{r}
+predict(object = lm_fit,
+        new_data = ames_test %>% slice(1:3))
+```
+
+Extract fitted/trained recipe.
+
+```{r}
+lm_fit %>% 
+  extract_recipe(estimated = T)
+```
+
+Extract tidy summary.
+
+```{r}
+lm_fit %>% 
+  # This returns the parsnip object:
+  extract_fit_parsnip() %>% 
+  # Now tidy the linear model object:
+  tidy() %>% 
+  slice(1:5)
+```
+
+## What to do with categorical variables?
+
+```{r}
+ames %>% 
+  ggplot(aes(x = Neighborhood)) + 
+  geom_bar() +
+  coord_flip()
+  
+```
+
+Lets add the bottom 1% of the cases into single factor called 'other'.
+
+```{r}
+simple_ames <- 
+  recipe(Sale_Price ~ Neighborhood + Gr_Liv_Area + Year_Built + Bldg_Type,
+         data = ames_train) %>%
+  step_log(Gr_Liv_Area, base = 10) %>% 
+  step_other(Neighborhood, threshold = 0.01) %>% 
+  step_dummy(all_nominal_predictors())
+simple_ames
+```
+
+Interactions?
+
+```{r}
+ggplot(ames_train, aes(x = Gr_Liv_Area, y = 10^Sale_Price)) + 
+  geom_point(alpha = .2) + 
+  facet_wrap(~ Bldg_Type) + 
+  geom_smooth(method = lm, formula = y ~ x, se = FALSE, color = "lightblue") + 
+  scale_x_log10() + 
+  scale_y_log10() + 
+  labs(x = "Gross Living Area", y = "Sale Price (USD)")
+```
+
+Lets add interaction between Gross Living Area and Building type. First, create dummies and then add interactions. Not the other way around like in base R.
+
+```{r}
+ames_rec <- 
+  recipe(Sale_Price ~ Neighborhood + Gr_Liv_Area + Year_Built + Bldg_Type + 
+           Latitude + Longitude, data = ames_train) %>%
+  step_log(Gr_Liv_Area, base = 10) %>% 
+  step_other(Neighborhood, threshold = 0.01, id = "my_id") %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_interact( ~ Gr_Liv_Area:starts_with("Bldg_Type_") ) %>% 
+  step_ns(Latitude, Longitude, deg_free = 20)
+
+tidy(simple_ames)
+```
+
+Fit again using new recipe.
+
+```{r}
+lm_wflow <- 
+  workflow() %>% 
+  add_model(spec = lm_model) %>% 
+  add_recipe(recipe = ames_rec)
+
+lm_fit <- fit(object = lm_wflow, 
+              data = ames_train)
+tidy(lm_fit)
+```
+
+# Metrics
+
+```{r}
+ames_test_res <- predict(object = lm_fit, 
+                         new_data = ames_test %>% select(-Sale_Price))
+ames_test_res
+```
+
+Bind predictions with observed values.
+
+```{r}
+ames_test_res <- bind_cols(ames_test_res, ames_test %>% select(Sale_Price))
+ames_test_res
+```
+
+Plot the predictions versus observations.
+
+```{r}
+ames_test_res %>% 
+  ggplot(aes(x = Sale_Price, y = .pred)) +
+  geom_point(size = 2, alpha = 0.5) +
+  geom_abline(lty = 2) +
+  labs(x = 'Sale Price (log10)', 
+       y = 'Predicted Price (log10)', 
+       title = 'Does predictions match with reality?') +
+  coord_obs_pred()
+```
+
+Calculate Root Mean Square Error.
+
+```{r}
+y = ames_test_res$Sale_Price
+yhat = ames_test_res$.pred
+rmse = sqrt(mean((y-yhat)^2))
+rmse
+```
+
+OR use the function.
+
+```{r}
+# rsme_vec
+rmse_vec(truth = y, 
+         estimate = yhat)
+# rmse
+rmse(data = ames_test_res, 
+     truth = Sale_Price, 
+     estimate = .pred)
+
+# tidyverse dialect
+ames_test_res %>% 
+  rmse(Sale_Price, .pred)
+```
+
+Multiple metrics, all at once.
+
+```{r}
+ames_metrics <- metric_set(yardstick::rmse, 
+                           yardstick::rsq, 
+                           yardstick::mae,
+                           yardstick::ccc)
+ames_metrics(ames_test_res, 
+             truth = Sale_Price, 
+             estimate = .pred)
+```
+
+# Resampling: v-fold Cross Validation
+
+```{r}
+set.seed(123)
+ames_folds <- vfold_cv(data = ames_train, 
+                       v = 10)
+ames_folds
+class(ames_folds)
+```
+
+Note that created object is a tibble with a column-list. Dive in.
+
+```{r}
+ames_folds$splits[[1]]
+```
+
+This object is both rsplit object as well as vfold_split object. One can apply analysis or assessment function to get to the resampled data.
+
+```{r}
+analysis(ames_folds$splits[[1]])
+```
+
+Or using tidyverse dialect:
+
+```{r}
+ames_folds$splits[[1]] %>% 
+  analysis()
+```
+
+## JUST VALIDATION
+
+```{r}
+set.seed(1002)
+val_set <- validation_split(data = ames_train, 
+                            prop = 3/4)
+val_set
+class(val_set)
+val_set$splits[[1]]
+```
+
+## Bootstrap sampling
+
+```{r}
+set.seed(2022)
+boot_samples <- bootstraps(data = ames_train, 
+                           times = 5)
+assessment(boot_samples$splits[[1]])
+class(boot_samples$splits[[1]])
+```
+
+# Estimating model performances using resampling
+
+First lets fit a random forest model.
+
+```{r}
+rf_model <- 
+  rand_forest(trees = 1000) %>% 
+  set_engine("ranger") %>% 
+  set_mode("regression")
+
+rf_wflow <- 
+  workflow() %>% 
+  add_formula( Sale_Price ~ Neighborhood + Gr_Liv_Area + Year_Built + Bldg_Type +
+                 Latitude + Longitude) %>% 
+  add_model(rf_model) 
+
+rf_fit <- 
+  rf_wflow %>% 
+  fit(data = ames_train)
+```
+
+Now we fit resamples.
+
+```{r}
+keep_pred <- control_resamples(save_pred = TRUE, 
+                               save_workflow = TRUE)
+
+set.seed(234)
+doParallel::registerDoParallel() # lets parallelize the computation
+rf_res <- 
+  rf_wflow %>% 
+  fit_resamples(resamples = ames_folds, 
+                control = keep_pred)
+rf_res
+```
+
+Note that this object above has many list columns one of which contains metrics as tibbles for each resample. We can look at average performance metrics below:
+
+```{r}
+collect_metrics(rf_res)
+```
+
+If one wants to get individual metrics for each sample, we can do that as below.
+
+```{r}
+collect_metrics(x = rf_res, summarize = F)
+```
+
+Get predictions for each assessment (fold):
+
+```{r}
+assess_res <- collect_predictions(x = rf_res, 
+                                  summarize = T)
+assess_res
+```
+
+Each observation in the assessment has a predicted sale price, and each one of these predictions are coming from training a slightly different data, but lets investigate the predictions versus the observations to try to see which folds had better or worse predictions.
+
+```{r plotting_for_fun}
+assess_res %>% 
+  ggplot(aes(x = Sale_Price, y = .pred)) + 
+  geom_point(alpha = .15) +
+  geom_abline(color = "red") + 
+  coord_obs_pred() + 
+  ylab("Predicted Sale Price") +
+  xlab('Observed Sale Price')
+```
+
+Tails, and particularly, lower tail has overestimates with high variance. Upper tail has underestimates.
+
+```{r}
+over_predicted <- 
+  assess_res %>% 
+  mutate(residual = Sale_Price - .pred) %>% 
+  arrange(desc(abs(residual))) %>% 
+  slice(1:10)
+over_predicted
+```
+
+Well, lets look these houses individually.
+
+```{r}
+ames_train %>% 
+  slice(over_predicted$.row) %>% 
+  select(Gr_Liv_Area, Neighborhood, Year_Built, Bedroom_AbvGr, Full_Bath)
+```
+
+## Modeling with validation
+
+```{r}
+val_res <- 
+  rf_wflow %>% 
+  fit_resamples(resamples = val_set)
+val_res
+```
+
+Get performance metrics.
+
+```{r}
+collect_metrics(x = val_res)
+```
+
+# Parallel programming
+
+Detect number of cores (CPUs) in your local machine along with the number that can be used in parallel calculations.
+
+```{r}
+parallel::detectCores(logical = FALSE)
+parallel::detectCores(logical = TRUE)
+```
+
+Register parallel backend package (macOS).
+
+```{r}
+library(doMC)
+registerDoMC(cores = 4)
+# now fit
+val_res <- 
+  rf_wflow %>% 
+  fit_resamples(resamples = val_set)
+collect_metrics(x = val_res)
+```
+
+OR like below:\
+
+```{r}
+# All operating systems
+library(doParallel)
+
+# Create a cluster object and then register: 
+cl <- makePSOCKcluster(8)
+registerDoParallel(cl)
+
+# Now run fit_resamples()`...
+val_res <- 
+  rf_wflow %>% 
+  fit_resamples(resamples = val_set)
+collect_metrics(x = val_res)
+
+stopCluster(cl)
+```
+
+Tidymodels is powerful, it uses the many other packages that already existed in R ecosystem, but combines them in a uniform way.

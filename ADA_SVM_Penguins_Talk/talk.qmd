@@ -1,0 +1,658 @@
+---
+title: "Finally, no more iris flowers: presenting penguins!"
+author: "Tural Sadigov"
+institute: "Hamilton College"
+editor: visual
+execute:
+  echo: true
+  eval: true
+  warning: false
+  output: true
+  error: true
+  cache: true
+  freeze: auto
+
+format:
+  revealjs: 
+    multiplex: true
+    scrollable: true
+    slide-number: true
+    chalkboard: 
+      buttons: true
+      boardmarker-width: 5
+    logo: profil_circle.png
+    css: styles.css
+    footer: <https://turalsadigov.github.io/>
+    transition: none
+    progress: true
+    touch: true
+    mouse-wheel: true
+    code-overflow: scroll
+    code-copy: true
+    code-line-numbers: true
+    incremental: true
+    preview-links: auto
+    fig-cap-location: margin
+---
+
+# Data : [palmer penguins](https://allisonhorst.github.io/palmerpenguins/) {auto-animate="true"}
+
+::: {style="text-align: center; margin-top: 1em"}
+[Source](https://allisonhorst.github.io/palmerpenguins/){preview-link="true" style="text-align: center"}
+:::
+
+![Artwork by \@allison_horst](lter_penguins.png)
+
+## Dream Island {auto-animate="true"}
+
+![](dream_island.png){fig-align="center"}
+
+## Loading data {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "1-2"
+library(palmerpenguins)
+data(package = 'palmerpenguins')
+```
+
+![Data are available by CC-0 license in accordance with the Palmer Station LTER Data Policy and the LTER Data Access Policy for Type I data.](penguin_logo.png){fig-align="center" width="240"}
+
+## Penguins data {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "1|2|3|4"
+#| eval: false
+library(tidyverse)
+penguins %>% 
+  select(-sex) %>% 
+  head(5)
+```
+
+## Penguins data {auto-animate="true"}
+
+```{r}
+library(tidyverse)
+penguins %>% 
+  select(-sex) %>% 
+  head(5)
+```
+
+## Penguin measurements: bill dimensions {auto-animate="true"}
+
+![](culmen_depth.png){fig-align="center" width="579"}
+
+## Penguin measurements: flipper length {auto-animate="true"}
+
+![](penguin_body_parts.webp){fig-align="center" width="543"}
+
+## Summary of the categorical data {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "1|2|3"
+#| eval: false
+penguins %>% 
+  select(where(is.factor)) %>% 
+  summary()
+```
+
+## Summary of the categorical data {auto-animate="true"}
+
+```{r}
+penguins %>% 
+  select(where(is.factor)) %>% 
+  summary()
+```
+
+## Summary of the categorical data: detailed {auto-animate="true"}
+
+```{r}
+#| eval: false
+penguins %>% 
+  count(species, sex)
+```
+
+## Summary of the categorical data: detailed {auto-animate="true"}
+
+```{r}
+penguins %>% 
+  count(species, sex)
+```
+
+## Summary of the categorical data: detailed {auto-animate="true"}
+
+```{r}
+#| eval: false
+penguins %>% 
+  drop_na() %>% 
+  count(species, sex)
+```
+
+## Summary of the categorical data: detailed {auto-animate="true"}
+
+```{r}
+penguins %>% 
+  drop_na() %>% 
+  count(species, sex)
+```
+
+## Numerical summaries grouped by species {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "1-2|3|4-5"
+#| eval: false
+penguins %>% 
+  drop_na() %>% 
+  group_by(species) %>% 
+  summarize(across(where(is.numeric), 
+                   mean))
+```
+
+## Numerical summaries grouped by species {auto-animate="true"}
+
+```{r}
+penguins %>% 
+  drop_na() %>% 
+  group_by(species) %>% 
+  summarize(across(where(is.numeric), 
+                   mean))
+```
+
+## Numerical summaries grouped by gender {auto-animate="true"}
+
+```{r}
+#| eval: false
+penguins %>% 
+  drop_na() %>% 
+  group_by(sex) %>% 
+  summarize(across(where(is.numeric), 
+                   mean))
+```
+
+## Numerical summaries grouped by gender {auto-animate="true"}
+
+```{r}
+penguins %>% 
+  drop_na() %>% 
+  group_by(sex) %>% 
+  summarize(across(where(is.numeric), 
+                   mean))
+```
+
+## Scatterplot colored by species {auto-animate="true"}
+
+::: panel-tabset
+### Plot
+
+```{r}
+#| echo: false
+penguins %>% 
+  drop_na() %>%  
+  ggplot(aes(x = bill_length_mm, 
+             y = bill_depth_mm, 
+             color = species, 
+             size = body_mass_g)) +
+  geom_point(alpha = 0.8) +
+  xlab("Bill length (mm)") +
+  ylab("Bill depth (mm)")
+```
+
+### Code
+
+```{r}
+#| eval: false
+penguins %>% 
+  drop_na() %>%  
+  ggplot(aes(x = bill_length_mm, 
+             y = bill_depth_mm, 
+             color = species, 
+             size = body_mass_g)) +
+  geom_point(alpha = 0.8) +
+  xlab("Bill length (mm)") +
+  ylab("Bill depth (mm)")
+```
+:::
+
+## Scatterplot colored by gender {auto-animate="true"}
+
+::: panel-tabset
+### Plot
+
+```{r}
+#| echo: false
+penguins %>% 
+  drop_na() %>%  
+  ggplot(aes(x = bill_length_mm, 
+             y = bill_depth_mm, 
+             color =sex, 
+             size = body_mass_g)) +
+  geom_point(alpha = 0.8) +
+  xlab("Bill length (mm)") +
+  ylab("Bill depth (mm)")
+```
+
+### Code
+
+```{r}
+#| eval: false
+penguins %>% 
+  drop_na() %>%  
+  ggplot(aes(x = bill_length_mm, 
+             y = bill_depth_mm, 
+             color =sex, 
+             size = body_mass_g)) +
+  geom_point(alpha = 0.8) +
+  xlab("Bill length (mm)") +
+  ylab("Bill depth (mm)")
+```
+:::
+
+## Scatterplot faceted with species {auto-animate="true"}
+
+::: panel-tabset
+### Plot
+
+```{r}
+#| echo: false
+penguins %>% 
+  drop_na() %>%  
+  ggplot(aes(x = bill_length_mm, 
+             y = bill_depth_mm, 
+             color =sex, 
+             size = body_mass_g)) +
+  geom_point(alpha = 0.8) +
+  facet_wrap(~species)+
+  xlab("Bill length (mm)") +
+  ylab("Bill depth (mm)")
+```
+
+### Code
+
+```{r}
+#| eval: false
+#| code-line-numbers: "8"
+penguins %>% 
+  drop_na() %>%  
+  ggplot(aes(x = bill_length_mm, 
+             y = bill_depth_mm, 
+             color =sex, 
+             size = body_mass_g)) +
+  geom_point(alpha = 0.8) +
+  facet_wrap(~species)+
+  xlab("Bill length (mm)") +
+  ylab("Bill depth (mm)")
+```
+:::
+
+## Histogram faceted with gender {auto-animate="true"}
+
+```{r}
+#| echo: false
+
+penguins %>% 
+  drop_na() %>%  
+  ggplot(aes(bill_depth_mm)) +
+  geom_histogram(aes(y = ..density..),
+                 color = "white", 
+                 alpha = 0.5, 
+                 fill = 'blue', bins =10) +
+  geom_density(lwd = 2, color = 'red') +
+  facet_wrap(~sex) +
+  xlab("Bill depth (mm)")
+```
+
+## 3D - Visual summary: colored by species {auto-animate="true"}
+
+::: panel-tabset
+
+### 3D plot
+
+```{r}
+#| echo: false
+
+library(plotly)
+plot_ly(x=penguins$bill_length_mm, 
+        y=penguins$bill_depth_mm, 
+        z=penguins$flipper_length_mm, 
+        type="scatter3d", 
+        mode="markers", 
+        color=penguins$species)
+
+```
+
+### Code
+
+```{r}
+#| eval: false
+
+library(plotly)
+plot_ly(x=penguins$bill_length_mm, 
+        y=penguins$bill_depth_mm, 
+        z=penguins$flipper_length_mm, 
+        type="scatter3d", 
+        mode="markers", 
+        color=penguins$species)
+
+```
+:::
+
+
+## 3D - Visual summary: colored by gender {auto-animate="true"}
+
+```{r}
+#| echo: false
+
+library(plotly)
+plot_ly(x=penguins$bill_length_mm, 
+        y=penguins$bill_depth_mm, 
+        z=penguins$flipper_length_mm, 
+        type="scatter3d", 
+        mode="markers", 
+        color=penguins$sex)
+```
+
+# Let the prediction begin! {auto-animate="true"}
+
+Lets see Support Vector Machines in action to predict the gender of a penguin.
+
+## Drop `island` and load `tidymodels` {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "2-3|4|1|5"
+penguins_df <- 
+  penguins %>% 
+  drop_na() %>% 
+  select(-island)
+library(tidymodels)
+```
+
+## Split the data {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "1|2-4|5-6|8|9-10"
+#| eval: false
+set.seed(2022)
+penguin_split <- initial_split(penguins_df, 
+                               strata = species, 
+                               prop = .70)
+penguin_train <- training(penguin_split)
+penguin_split <- testing(penguin_split)
+
+set.seed(1234)
+penguin_cv <- vfold_cv(penguin_train, v = 5)
+penguin_cv
+```
+
+## Split the data {auto-animate="true"}
+
+```{r}
+set.seed(2022)
+penguin_split <- initial_split(penguins_df, 
+                               strata = sex, 
+                               prop = .70)
+penguin_train <- training(penguin_split)
+penguin_test <- testing(penguin_split)
+
+set.seed(1234)
+penguin_cv <- vfold_cv(penguin_train, v = 5)
+penguin_cv
+```
+
+## Model specifications {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "1|2|3|4|5"
+# support vector classifier
+svc_spec <- 
+  svm_linear() %>% 
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+```
+
+## Model specifications {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "9"
+#| eval: false
+# support vector classifier
+svc_spec <- 
+  svm_linear() %>% 
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+
+# support vector machine with radial kernel
+svm_rad_spec <- 
+  svm_rbf() %>% 
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+```
+
+## Model specifications {auto-animate="true"}
+
+```{r}
+# support vector classifier
+svc_spec <- 
+  svm_linear() %>% 
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+
+# support vector machine with radial kernel
+svm_rad_spec <- 
+  svm_rbf() %>% 
+  set_engine("kernlab") %>% 
+  set_mode("classification")
+```
+
+## Workflows (i.e., ML pipeline) and model fitting {auto-animate="true"}
+
+```{r}
+#| eval: false
+#| code-line-numbers: "2|3|1"
+penguin_wf <- 
+  workflow() %>% 
+  add_formula(sex ~ .)
+```
+
+## Workflows (i.e., ML pipeline) and model fitting {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "6|7|8-11|5"
+#| eval: false
+penguin_wf <- 
+  workflow() %>% 
+  add_formula(sex ~ .)
+
+svc_results <-
+  penguin_wf %>% 
+  add_model(spec = svc_spec) %>% 
+  fit_resamples(penguin_cv, 
+                control = control_resamples(save_pred = T, 
+                                            verbose = T))
+```
+
+## Workflows (i.e., ML pipeline) and model fitting {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "14"
+#| eval: false
+penguin_wf <- 
+  workflow() %>% 
+  add_formula(sex ~ .)
+
+svc_results <-
+  penguin_wf %>% 
+  add_model(spec = svc_spec) %>% 
+  fit_resamples(penguin_cv, 
+                control = control_resamples(save_pred = T, 
+                                            verbose = T))
+
+svm_results <-
+  penguin_wf %>% 
+  add_model(spec = svm_rad_spec) %>% 
+  fit_resamples(penguin_cv, 
+                control = control_resamples(save_pred = T, 
+                                            verbose = T))
+```
+
+## Workflows (i.e., ML pipeline) and model fitting {auto-animate="true"}
+
+```{r}
+#| output: false
+penguin_wf <- 
+  workflow() %>% 
+  add_formula(sex ~ .)
+
+svc_results <-
+  penguin_wf %>% 
+  add_model(spec = svc_spec) %>% 
+  fit_resamples(penguin_cv, 
+                control = control_resamples(save_pred = T, 
+                                            verbose = T))
+
+svm_results <-
+  penguin_wf %>% 
+  add_model(spec = svm_rad_spec) %>% 
+  fit_resamples(penguin_cv, 
+                control = control_resamples(save_pred = T, 
+                                            verbose = T))
+```
+
+## Model evaluation {auto-animate="true"}
+
+```{r}
+#| eval: false
+collect_metrics(svc_results)
+```
+
+## Model evaluation {auto-animate="true"}
+
+```{r}
+collect_metrics(svc_results)
+```
+
+```{r}
+#| eval: false
+collect_metrics(svm_results)
+```
+
+## Model evaluation {auto-animate="true"}
+
+```{r}
+collect_metrics(svc_results)
+```
+
+```{r}
+collect_metrics(svm_results)
+```
+
+# Let's choose SVM with radial kernel! {auto-animate="true"}
+
+## Fit SVM for the whole training data {auto-animate="true"}
+
+```{r}
+#| code-line-numbers: "2-3|4|1"
+penguin_final <- 
+  penguin_wf %>% 
+  add_model(svm_rad_spec) %>%
+  last_fit(penguin_split)
+```
+
+## Prediction accuracy on testing data {auto-animate="true"}
+
+```{r}
+#| eval: false
+collect_metrics(penguin_final)
+```
+
+## Prediction accuracy on testing data {auto-animate="true"}
+
+```{r}
+collect_metrics(penguin_final)
+```
+
+## Predictions on testing data {auto-animate="true"}
+
+```{r}
+#| eval: false
+collect_predictions(penguin_final)
+```
+
+## Predictions on testing data {auto-animate="true"}
+
+```{r}
+collect_predictions(penguin_final) %>% 
+  select(-.config)
+```
+
+## Confusion matrix on testing data {auto-animate="true"}
+
+```{r}
+#| eval: false
+#| code-line-numbers: "1|2"
+collect_predictions(penguin_final) %>% 
+  conf_mat(sex, .pred_class)
+```
+
+## Confusion matrix on testing data {auto-animate="true"}
+
+```{r}
+collect_predictions(penguin_final) %>% 
+  conf_mat(sex, .pred_class)
+```
+
+## Sanity check! {auto-animate="true"}
+
+Manually calculate accuracy
+
+```{r}
+#| eval: false
+M <- collect_predictions(penguin_final) %>% 
+  conf_mat(sex, .pred_class)
+
+(M$table[1,1] + M$table[2,2])/nrow(penguin_test)
+```
+
+## Sanity check! {auto-animate="true"}
+
+Manually calculate accuracy
+
+```{r}
+M <- collect_predictions(penguin_final) %>% 
+  conf_mat(sex, .pred_class)
+
+(M$table[1,1] + M$table[2,2])/nrow(penguin_test)
+```
+
+## Sanity check! {auto-animate="true"}
+
+Manually calculate accuracy
+
+```{r}
+M <- collect_predictions(penguin_final) %>% 
+  conf_mat(sex, .pred_class)
+
+(M$table[1,1] + M$table[2,2])/nrow(penguin_test)
+```
+
+Collect accuracy
+
+```{r}
+#| eval: false
+collect_metrics(penguin_final)
+```
+
+## Sanity check! {auto-animate="true"}
+
+Manually calculate accuracy
+
+```{r}
+M <- collect_predictions(penguin_final) %>% 
+  conf_mat(sex, .pred_class)
+
+(M$table[1,1] + M$table[2,2])/nrow(penguin_test)
+```
+
+Collect accuracy
+
+```{r}
+collect_metrics(penguin_final)
+```
