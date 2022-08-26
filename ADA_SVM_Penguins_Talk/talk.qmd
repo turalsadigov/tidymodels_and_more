@@ -35,6 +35,11 @@ format:
     fig-cap-location: margin
 ---
 
+# Follow along
+
+[https://rpubs.com/tsadigov/ada_svm_penguins_2022](https://rpubs.com/tsadigov/ada_svm_penguins_2022){auto-animate="true"}
+
+
 # Data : [palmer penguins](https://allisonhorst.github.io/palmerpenguins/) {auto-animate="true"}
 
 ::: {style="text-align: center; margin-top: 1em"}
@@ -45,7 +50,7 @@ format:
 
 ## Dream Island {auto-animate="true"}
 
-![](dream_island.png){fig-align="center"}
+![](dream_island.png){fig-align="center" width="386"}
 
 ## Loading data {auto-animate="true"}
 
@@ -303,7 +308,6 @@ penguins %>%
 ## 3D - Visual summary: colored by species {auto-animate="true"}
 
 ::: panel-tabset
-
 ### 3D plot
 
 ```{r}
@@ -334,7 +338,6 @@ plot_ly(x=penguins$bill_length_mm,
 
 ```
 :::
-
 
 ## 3D - Visual summary: colored by gender {auto-animate="true"}
 
