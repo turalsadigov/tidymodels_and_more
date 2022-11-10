@@ -724,42 +724,91 @@
 </section>
 <section id="drop-island-and-load-tidymodels" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Drop <code>island</code> and load <code>tidymodels</code></h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-24_23e95859da4538218d2c74fce5afb4f2">
-<div class="sourceCode cell-code" id="cb24" data-code-line-numbers="2-3|4|1|5"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb24-1" class="hljs-ln-code"><a href="#cb24-1"></a>penguins_df <span class="ot">&lt;-</span> </span>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-24_9ec3eca1fa758a35bee22ccfab3191aa">
+<div class="sourceCode cell-code" id="cb24" data-code-line-numbers="2-3|4|1|5|7|8|9"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb24-1" class="hljs-ln-code"><a href="#cb24-1"></a>penguins_df <span class="ot">&lt;-</span> </span>
 <span id="cb24-2" class="hljs-ln-code"><a href="#cb24-2"></a>  penguins <span class="sc">%&gt;%</span> </span>
 <span id="cb24-3" class="hljs-ln-code"><a href="#cb24-3"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb24-4" class="hljs-ln-code"><a href="#cb24-4"></a>  <span class="fu">select</span>(<span class="sc">-</span>island)</span>
-<span id="cb24-5" class="hljs-ln-code"><a href="#cb24-5"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-5" class="hljs-ln-code"><a href="#cb24-5"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb24-6" class="hljs-ln-code"><a href="#cb24-6"></a></span>
+<span id="cb24-7" class="hljs-ln-code"><a href="#cb24-7"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb24-8" class="hljs-ln-code"><a href="#cb24-8"></a>penguins_df <span class="sc">%&gt;%</span> </span>
+<span id="cb24-9" class="hljs-ln-code"><a href="#cb24-9"></a>  <span class="fu">sample_n</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="drop-island-and-load-tidymodels-1" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Drop <code>island</code> and load <code>tidymodels</code></h2>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-25_1b58d846fca24cc65b14b1a9c11f58de">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb25-1" class="hljs-ln-code"><a href="#cb25-1"></a>penguins_df <span class="ot">&lt;-</span> </span>
+<span id="cb25-2" class="hljs-ln-code"><a href="#cb25-2"></a>  penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3" class="hljs-ln-code"><a href="#cb25-3"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4" class="hljs-ln-code"><a href="#cb25-4"></a>  <span class="fu">select</span>(<span class="sc">-</span>island)</span>
+<span id="cb25-5" class="hljs-ln-code"><a href="#cb25-5"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb25-6" class="hljs-ln-code"><a href="#cb25-6"></a></span>
+<span id="cb25-7" class="hljs-ln-code"><a href="#cb25-7"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb25-8" class="hljs-ln-code"><a href="#cb25-8"></a>penguins_df <span class="sc">%&gt;%</span> </span>
+<span id="cb25-9" class="hljs-ln-code"><a href="#cb25-9"></a>  <span class="fu">sample_n</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 6
+   species   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g sex   
+   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt; &lt;fct&gt; 
+ 1 Gentoo              59.6          17                 230        6050 male  
+ 2 Adelie              34.4          18.4               184        3325 female
+ 3 Gentoo              45.2          15.8               215        5300 male  
+ 4 Chinstrap           49            19.5               210        3950 male  
+ 5 Adelie              41.4          18.5               202        3875 male  
+ 6 Chinstrap           51            18.8               203        4100 male  
+ 7 Gentoo              44.9          13.8               212        4750 female
+ 8 Gentoo              51.1          16.5               225        5250 male  
+ 9 Chinstrap           50.8          19                 210        4100 male  
+10 Gentoo              45.4          14.6               211        4800 female</code></pre>
+</div>
+</div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+
+<img data-src="1.png" class="margin-caption r-stretch quarto-figure-center"></section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+
+<img data-src="2.png" class="margin-caption r-stretch"></section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+
+<img data-src="3.png" class="margin-caption r-stretch"></section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+
+<img data-src="4.png" class="margin-caption r-stretch quarto-figure-center"></section>
 <section id="split-the-data" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Split the data</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-25_dc2ff23f73eed909d07185c7bfd967f1">
-<div class="sourceCode cell-code" id="cb25" data-code-line-numbers="1|2-4|5-6|8|9-10"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb25-1" class="hljs-ln-code"><a href="#cb25-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
-<span id="cb25-2" class="hljs-ln-code"><a href="#cb25-2"></a>penguin_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(penguins_df, </span>
-<span id="cb25-3" class="hljs-ln-code"><a href="#cb25-3"></a>                               <span class="at">strata =</span> species, </span>
-<span id="cb25-4" class="hljs-ln-code"><a href="#cb25-4"></a>                               <span class="at">prop =</span> .<span class="dv">70</span>)</span>
-<span id="cb25-5" class="hljs-ln-code"><a href="#cb25-5"></a>penguin_train <span class="ot">&lt;-</span> <span class="fu">training</span>(penguin_split)</span>
-<span id="cb25-6" class="hljs-ln-code"><a href="#cb25-6"></a>penguin_split <span class="ot">&lt;-</span> <span class="fu">testing</span>(penguin_split)</span>
-<span id="cb25-7" class="hljs-ln-code"><a href="#cb25-7"></a></span>
-<span id="cb25-8" class="hljs-ln-code"><a href="#cb25-8"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb25-9" class="hljs-ln-code"><a href="#cb25-9"></a>penguin_cv <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(penguin_train, <span class="at">v =</span> <span class="dv">5</span>)</span>
-<span id="cb25-10" class="hljs-ln-code"><a href="#cb25-10"></a>penguin_cv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-26_fbc1e83c8fb0cec98a2866e4536b5789">
+<div class="sourceCode cell-code" id="cb27" data-code-line-numbers="1|2-4|5-6|8|9-10"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb27-1" class="hljs-ln-code"><a href="#cb27-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb27-2" class="hljs-ln-code"><a href="#cb27-2"></a>penguin_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(penguins_df, </span>
+<span id="cb27-3" class="hljs-ln-code"><a href="#cb27-3"></a>                               <span class="at">strata =</span> species, </span>
+<span id="cb27-4" class="hljs-ln-code"><a href="#cb27-4"></a>                               <span class="at">prop =</span> .<span class="dv">70</span>)</span>
+<span id="cb27-5" class="hljs-ln-code"><a href="#cb27-5"></a>penguin_train <span class="ot">&lt;-</span> <span class="fu">training</span>(penguin_split)</span>
+<span id="cb27-6" class="hljs-ln-code"><a href="#cb27-6"></a>penguin_split <span class="ot">&lt;-</span> <span class="fu">testing</span>(penguin_split)</span>
+<span id="cb27-7" class="hljs-ln-code"><a href="#cb27-7"></a></span>
+<span id="cb27-8" class="hljs-ln-code"><a href="#cb27-8"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb27-9" class="hljs-ln-code"><a href="#cb27-9"></a>penguin_cv <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(penguin_train, <span class="at">v =</span> <span class="dv">5</span>)</span>
+<span id="cb27-10" class="hljs-ln-code"><a href="#cb27-10"></a>penguin_cv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="split-the-data-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Split the data</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-26_9825ead1cd6b5385df5ae00b1249b4be">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb26-1" class="hljs-ln-code"><a href="#cb26-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
-<span id="cb26-2" class="hljs-ln-code"><a href="#cb26-2"></a>penguin_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(penguins_df, </span>
-<span id="cb26-3" class="hljs-ln-code"><a href="#cb26-3"></a>                               <span class="at">strata =</span> sex, </span>
-<span id="cb26-4" class="hljs-ln-code"><a href="#cb26-4"></a>                               <span class="at">prop =</span> .<span class="dv">70</span>)</span>
-<span id="cb26-5" class="hljs-ln-code"><a href="#cb26-5"></a>penguin_train <span class="ot">&lt;-</span> <span class="fu">training</span>(penguin_split)</span>
-<span id="cb26-6" class="hljs-ln-code"><a href="#cb26-6"></a>penguin_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(penguin_split)</span>
-<span id="cb26-7" class="hljs-ln-code"><a href="#cb26-7"></a></span>
-<span id="cb26-8" class="hljs-ln-code"><a href="#cb26-8"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb26-9" class="hljs-ln-code"><a href="#cb26-9"></a>penguin_cv <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(penguin_train, <span class="at">v =</span> <span class="dv">5</span>)</span>
-<span id="cb26-10" class="hljs-ln-code"><a href="#cb26-10"></a>penguin_cv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-27_b0cbeef31b32774a07a2e137fac27ad8">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb28-1" class="hljs-ln-code"><a href="#cb28-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span>
+<span id="cb28-2" class="hljs-ln-code"><a href="#cb28-2"></a>penguin_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(penguins_df, </span>
+<span id="cb28-3" class="hljs-ln-code"><a href="#cb28-3"></a>                               <span class="at">strata =</span> sex, </span>
+<span id="cb28-4" class="hljs-ln-code"><a href="#cb28-4"></a>                               <span class="at">prop =</span> .<span class="dv">70</span>)</span>
+<span id="cb28-5" class="hljs-ln-code"><a href="#cb28-5"></a>penguin_train <span class="ot">&lt;-</span> <span class="fu">training</span>(penguin_split)</span>
+<span id="cb28-6" class="hljs-ln-code"><a href="#cb28-6"></a>penguin_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(penguin_split)</span>
+<span id="cb28-7" class="hljs-ln-code"><a href="#cb28-7"></a></span>
+<span id="cb28-8" class="hljs-ln-code"><a href="#cb28-8"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb28-9" class="hljs-ln-code"><a href="#cb28-9"></a>penguin_cv <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(penguin_train, <span class="at">v =</span> <span class="dv">5</span>)</span>
+<span id="cb28-10" class="hljs-ln-code"><a href="#cb28-10"></a>penguin_cv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#  5-fold cross-validation 
 # A tibble: 5 × 2
@@ -775,123 +824,113 @@
 </section>
 <section id="model-specifications" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Model specifications</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-27_0f8fff7399b8631fdbe99665c5d49881">
-<div class="sourceCode cell-code" id="cb28" data-code-line-numbers="1|2|3|4|5"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb28-1" class="hljs-ln-code"><a href="#cb28-1"></a><span class="co"># support vector classifier</span></span>
-<span id="cb28-2" class="hljs-ln-code"><a href="#cb28-2"></a>svc_spec <span class="ot">&lt;-</span> </span>
-<span id="cb28-3" class="hljs-ln-code"><a href="#cb28-3"></a>  <span class="fu">svm_linear</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb28-4" class="hljs-ln-code"><a href="#cb28-4"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-5" class="hljs-ln-code"><a href="#cb28-5"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-28_433909c88f9f31ff2c60a8da75038b6b">
+<div class="sourceCode cell-code" id="cb30" data-code-line-numbers="1|2|3|4|5"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb30-1" class="hljs-ln-code"><a href="#cb30-1"></a><span class="co"># support vector classifier</span></span>
+<span id="cb30-2" class="hljs-ln-code"><a href="#cb30-2"></a>svc_spec <span class="ot">&lt;-</span> </span>
+<span id="cb30-3" class="hljs-ln-code"><a href="#cb30-3"></a>  <span class="fu">svm_linear</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb30-4" class="hljs-ln-code"><a href="#cb30-4"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-5" class="hljs-ln-code"><a href="#cb30-5"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="model-specifications-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Model specifications</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-28_cc47efd087a04ab54fccd113c733b957">
-<div class="sourceCode cell-code" id="cb29" data-code-line-numbers="9"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb29-1" class="hljs-ln-code"><a href="#cb29-1"></a><span class="co"># support vector classifier</span></span>
-<span id="cb29-2" class="hljs-ln-code"><a href="#cb29-2"></a>svc_spec <span class="ot">&lt;-</span> </span>
-<span id="cb29-3" class="hljs-ln-code"><a href="#cb29-3"></a>  <span class="fu">svm_linear</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb29-4" class="hljs-ln-code"><a href="#cb29-4"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-5" class="hljs-ln-code"><a href="#cb29-5"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
-<span id="cb29-6" class="hljs-ln-code"><a href="#cb29-6"></a></span>
-<span id="cb29-7" class="hljs-ln-code"><a href="#cb29-7"></a><span class="co"># support vector machine with radial kernel</span></span>
-<span id="cb29-8" class="hljs-ln-code"><a href="#cb29-8"></a>svm_rad_spec <span class="ot">&lt;-</span> </span>
-<span id="cb29-9" class="hljs-ln-code"><a href="#cb29-9"></a>  <span class="fu">svm_rbf</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb29-10" class="hljs-ln-code"><a href="#cb29-10"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-11" class="hljs-ln-code"><a href="#cb29-11"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-29_85f19a61d01bd86f68f2c4977e17660a">
+<div class="sourceCode cell-code" id="cb31" data-code-line-numbers="9"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb31-1" class="hljs-ln-code"><a href="#cb31-1"></a><span class="co"># support vector classifier</span></span>
+<span id="cb31-2" class="hljs-ln-code"><a href="#cb31-2"></a>svc_spec <span class="ot">&lt;-</span> </span>
+<span id="cb31-3" class="hljs-ln-code"><a href="#cb31-3"></a>  <span class="fu">svm_linear</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb31-4" class="hljs-ln-code"><a href="#cb31-4"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-5" class="hljs-ln-code"><a href="#cb31-5"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb31-6" class="hljs-ln-code"><a href="#cb31-6"></a></span>
+<span id="cb31-7" class="hljs-ln-code"><a href="#cb31-7"></a><span class="co"># support vector machine with radial kernel</span></span>
+<span id="cb31-8" class="hljs-ln-code"><a href="#cb31-8"></a>svm_rad_spec <span class="ot">&lt;-</span> </span>
+<span id="cb31-9" class="hljs-ln-code"><a href="#cb31-9"></a>  <span class="fu">svm_rbf</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb31-10" class="hljs-ln-code"><a href="#cb31-10"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-11" class="hljs-ln-code"><a href="#cb31-11"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="model-specifications-2" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Model specifications</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-29_639c1b40a57b68ce787eec64e2178754">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb30-1" class="hljs-ln-code"><a href="#cb30-1"></a><span class="co"># support vector classifier</span></span>
-<span id="cb30-2" class="hljs-ln-code"><a href="#cb30-2"></a>svc_spec <span class="ot">&lt;-</span> </span>
-<span id="cb30-3" class="hljs-ln-code"><a href="#cb30-3"></a>  <span class="fu">svm_linear</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb30-4" class="hljs-ln-code"><a href="#cb30-4"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-5" class="hljs-ln-code"><a href="#cb30-5"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
-<span id="cb30-6" class="hljs-ln-code"><a href="#cb30-6"></a></span>
-<span id="cb30-7" class="hljs-ln-code"><a href="#cb30-7"></a><span class="co"># support vector machine with radial kernel</span></span>
-<span id="cb30-8" class="hljs-ln-code"><a href="#cb30-8"></a>svm_rad_spec <span class="ot">&lt;-</span> </span>
-<span id="cb30-9" class="hljs-ln-code"><a href="#cb30-9"></a>  <span class="fu">svm_rbf</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb30-10" class="hljs-ln-code"><a href="#cb30-10"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-11" class="hljs-ln-code"><a href="#cb30-11"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-30_c9374b967910d77e02fe301dbeaf505e">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb32-1" class="hljs-ln-code"><a href="#cb32-1"></a><span class="co"># support vector classifier</span></span>
+<span id="cb32-2" class="hljs-ln-code"><a href="#cb32-2"></a>svc_spec <span class="ot">&lt;-</span> </span>
+<span id="cb32-3" class="hljs-ln-code"><a href="#cb32-3"></a>  <span class="fu">svm_linear</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-4" class="hljs-ln-code"><a href="#cb32-4"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-5" class="hljs-ln-code"><a href="#cb32-5"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb32-6" class="hljs-ln-code"><a href="#cb32-6"></a></span>
+<span id="cb32-7" class="hljs-ln-code"><a href="#cb32-7"></a><span class="co"># support vector machine with radial kernel</span></span>
+<span id="cb32-8" class="hljs-ln-code"><a href="#cb32-8"></a>svm_rad_spec <span class="ot">&lt;-</span> </span>
+<span id="cb32-9" class="hljs-ln-code"><a href="#cb32-9"></a>  <span class="fu">svm_rbf</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-10" class="hljs-ln-code"><a href="#cb32-10"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-11" class="hljs-ln-code"><a href="#cb32-11"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="workflows-i.e.-ml-pipeline-and-model-fitting" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Workflows (i.e., ML pipeline) and model fitting</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-30_5d66cf9595730f78e6f5699490c76b2d">
-<div class="sourceCode cell-code" id="cb31" data-code-line-numbers="2|3|1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb31-1" class="hljs-ln-code"><a href="#cb31-1"></a>penguin_wf <span class="ot">&lt;-</span> </span>
-<span id="cb31-2" class="hljs-ln-code"><a href="#cb31-2"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb31-3" class="hljs-ln-code"><a href="#cb31-3"></a>  <span class="fu">add_formula</span>(sex <span class="sc">~</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-31_6f5cd861c27aa278605c8bbf4c29c74c">
+<div class="sourceCode cell-code" id="cb33" data-code-line-numbers="2|3|1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb33-1" class="hljs-ln-code"><a href="#cb33-1"></a>penguin_wf <span class="ot">&lt;-</span> </span>
+<span id="cb33-2" class="hljs-ln-code"><a href="#cb33-2"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb33-3" class="hljs-ln-code"><a href="#cb33-3"></a>  <span class="fu">add_formula</span>(sex <span class="sc">~</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="workflows-i.e.-ml-pipeline-and-model-fitting-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Workflows (i.e., ML pipeline) and model fitting</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-31_c5dbc7e38069d83a848be9213b59f82b">
-<div class="sourceCode cell-code" id="cb32" data-code-line-numbers="6|7|8-11|5"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb32-1" class="hljs-ln-code"><a href="#cb32-1"></a>penguin_wf <span class="ot">&lt;-</span> </span>
-<span id="cb32-2" class="hljs-ln-code"><a href="#cb32-2"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb32-3" class="hljs-ln-code"><a href="#cb32-3"></a>  <span class="fu">add_formula</span>(sex <span class="sc">~</span> .)</span>
-<span id="cb32-4" class="hljs-ln-code"><a href="#cb32-4"></a></span>
-<span id="cb32-5" class="hljs-ln-code"><a href="#cb32-5"></a>svc_results <span class="ot">&lt;-</span></span>
-<span id="cb32-6" class="hljs-ln-code"><a href="#cb32-6"></a>  penguin_wf <span class="sc">%&gt;%</span> </span>
-<span id="cb32-7" class="hljs-ln-code"><a href="#cb32-7"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> svc_spec) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-8" class="hljs-ln-code"><a href="#cb32-8"></a>  <span class="fu">fit_resamples</span>(penguin_cv, </span>
-<span id="cb32-9" class="hljs-ln-code"><a href="#cb32-9"></a>                <span class="at">control =</span> <span class="fu">control_resamples</span>(<span class="at">save_pred =</span> T, </span>
-<span id="cb32-10" class="hljs-ln-code"><a href="#cb32-10"></a>                                            <span class="at">verbose =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="workflows-i.e.-ml-pipeline-and-model-fitting-2" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Workflows (i.e., ML pipeline) and model fitting</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-32_6477e50406dadf93a4e6e98a652624d3">
-<div class="sourceCode cell-code" id="cb33" data-code-line-numbers="14"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb33-1" class="hljs-ln-code"><a href="#cb33-1"></a>penguin_wf <span class="ot">&lt;-</span> </span>
-<span id="cb33-2" class="hljs-ln-code"><a href="#cb33-2"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb33-3" class="hljs-ln-code"><a href="#cb33-3"></a>  <span class="fu">add_formula</span>(sex <span class="sc">~</span> .)</span>
-<span id="cb33-4" class="hljs-ln-code"><a href="#cb33-4"></a></span>
-<span id="cb33-5" class="hljs-ln-code"><a href="#cb33-5"></a>svc_results <span class="ot">&lt;-</span></span>
-<span id="cb33-6" class="hljs-ln-code"><a href="#cb33-6"></a>  penguin_wf <span class="sc">%&gt;%</span> </span>
-<span id="cb33-7" class="hljs-ln-code"><a href="#cb33-7"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> svc_spec) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-8" class="hljs-ln-code"><a href="#cb33-8"></a>  <span class="fu">fit_resamples</span>(penguin_cv, </span>
-<span id="cb33-9" class="hljs-ln-code"><a href="#cb33-9"></a>                <span class="at">control =</span> <span class="fu">control_resamples</span>(<span class="at">save_pred =</span> T, </span>
-<span id="cb33-10" class="hljs-ln-code"><a href="#cb33-10"></a>                                            <span class="at">verbose =</span> T))</span>
-<span id="cb33-11" class="hljs-ln-code"><a href="#cb33-11"></a></span>
-<span id="cb33-12" class="hljs-ln-code"><a href="#cb33-12"></a>svm_results <span class="ot">&lt;-</span></span>
-<span id="cb33-13" class="hljs-ln-code"><a href="#cb33-13"></a>  penguin_wf <span class="sc">%&gt;%</span> </span>
-<span id="cb33-14" class="hljs-ln-code"><a href="#cb33-14"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> svm_rad_spec) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-15" class="hljs-ln-code"><a href="#cb33-15"></a>  <span class="fu">fit_resamples</span>(penguin_cv, </span>
-<span id="cb33-16" class="hljs-ln-code"><a href="#cb33-16"></a>                <span class="at">control =</span> <span class="fu">control_resamples</span>(<span class="at">save_pred =</span> T, </span>
-<span id="cb33-17" class="hljs-ln-code"><a href="#cb33-17"></a>                                            <span class="at">verbose =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="workflows-i.e.-ml-pipeline-and-model-fitting-3" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Workflows (i.e., ML pipeline) and model fitting</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-33_1de4148ec8c5d6287dce2c0693869de4">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb34-1" class="hljs-ln-code"><a href="#cb34-1"></a>penguin_wf <span class="ot">&lt;-</span> </span>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-32_44d40097a7b5c58eccd05f786795b456">
+<div class="sourceCode cell-code" id="cb34" data-code-line-numbers="6|7|8-11|5"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb34-1" class="hljs-ln-code"><a href="#cb34-1"></a>penguin_wf <span class="ot">&lt;-</span> </span>
 <span id="cb34-2" class="hljs-ln-code"><a href="#cb34-2"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb34-3" class="hljs-ln-code"><a href="#cb34-3"></a>  <span class="fu">add_formula</span>(sex <span class="sc">~</span> .)</span>
 <span id="cb34-4" class="hljs-ln-code"><a href="#cb34-4"></a></span>
 <span id="cb34-5" class="hljs-ln-code"><a href="#cb34-5"></a>svc_results <span class="ot">&lt;-</span></span>
 <span id="cb34-6" class="hljs-ln-code"><a href="#cb34-6"></a>  penguin_wf <span class="sc">%&gt;%</span> </span>
 <span id="cb34-7" class="hljs-ln-code"><a href="#cb34-7"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> svc_spec) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-8" class="hljs-ln-code"><a href="#cb34-8"></a>  <span class="fu">fit_resamples</span>(penguin_cv, </span>
-<span id="cb34-9" class="hljs-ln-code"><a href="#cb34-9"></a>                <span class="at">control =</span> <span class="fu">control_resamples</span>(<span class="at">save_pred =</span> T, </span>
-<span id="cb34-10" class="hljs-ln-code"><a href="#cb34-10"></a>                                            <span class="at">verbose =</span> T))</span>
-<span id="cb34-11" class="hljs-ln-code"><a href="#cb34-11"></a></span>
-<span id="cb34-12" class="hljs-ln-code"><a href="#cb34-12"></a>svm_results <span class="ot">&lt;-</span></span>
-<span id="cb34-13" class="hljs-ln-code"><a href="#cb34-13"></a>  penguin_wf <span class="sc">%&gt;%</span> </span>
-<span id="cb34-14" class="hljs-ln-code"><a href="#cb34-14"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> svm_rad_spec) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-15" class="hljs-ln-code"><a href="#cb34-15"></a>  <span class="fu">fit_resamples</span>(penguin_cv, </span>
-<span id="cb34-16" class="hljs-ln-code"><a href="#cb34-16"></a>                <span class="at">control =</span> <span class="fu">control_resamples</span>(<span class="at">save_pred =</span> T, </span>
-<span id="cb34-17" class="hljs-ln-code"><a href="#cb34-17"></a>                                            <span class="at">verbose =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-8" class="hljs-ln-code"><a href="#cb34-8"></a>  <span class="fu">fit_resamples</span>(penguin_cv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="workflows-i.e.-ml-pipeline-and-model-fitting-2" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Workflows (i.e., ML pipeline) and model fitting</h2>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-33_ae70d8da5de1cbaa7ab9b55fab420703">
+<div class="sourceCode cell-code" id="cb35" data-code-line-numbers="12"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb35-1" class="hljs-ln-code"><a href="#cb35-1"></a>penguin_wf <span class="ot">&lt;-</span> </span>
+<span id="cb35-2" class="hljs-ln-code"><a href="#cb35-2"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb35-3" class="hljs-ln-code"><a href="#cb35-3"></a>  <span class="fu">add_formula</span>(sex <span class="sc">~</span> .)</span>
+<span id="cb35-4" class="hljs-ln-code"><a href="#cb35-4"></a></span>
+<span id="cb35-5" class="hljs-ln-code"><a href="#cb35-5"></a>svc_results <span class="ot">&lt;-</span></span>
+<span id="cb35-6" class="hljs-ln-code"><a href="#cb35-6"></a>  penguin_wf <span class="sc">%&gt;%</span> </span>
+<span id="cb35-7" class="hljs-ln-code"><a href="#cb35-7"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> svc_spec) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-8" class="hljs-ln-code"><a href="#cb35-8"></a>  <span class="fu">fit_resamples</span>(penguin_cv)</span>
+<span id="cb35-9" class="hljs-ln-code"><a href="#cb35-9"></a></span>
+<span id="cb35-10" class="hljs-ln-code"><a href="#cb35-10"></a>svm_results <span class="ot">&lt;-</span></span>
+<span id="cb35-11" class="hljs-ln-code"><a href="#cb35-11"></a>  penguin_wf <span class="sc">%&gt;%</span> </span>
+<span id="cb35-12" class="hljs-ln-code"><a href="#cb35-12"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> svm_rad_spec) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-13" class="hljs-ln-code"><a href="#cb35-13"></a>  <span class="fu">fit_resamples</span>(penguin_cv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="workflows-i.e.-ml-pipeline-and-model-fitting-3" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Workflows (i.e., ML pipeline) and model fitting</h2>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-34_1747907b4d814d73b7a07c01c3f84262">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb36-1" class="hljs-ln-code"><a href="#cb36-1"></a>penguin_wf <span class="ot">&lt;-</span> </span>
+<span id="cb36-2" class="hljs-ln-code"><a href="#cb36-2"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3" class="hljs-ln-code"><a href="#cb36-3"></a>  <span class="fu">add_formula</span>(sex <span class="sc">~</span> .)</span>
+<span id="cb36-4" class="hljs-ln-code"><a href="#cb36-4"></a></span>
+<span id="cb36-5" class="hljs-ln-code"><a href="#cb36-5"></a>svc_results <span class="ot">&lt;-</span></span>
+<span id="cb36-6" class="hljs-ln-code"><a href="#cb36-6"></a>  penguin_wf <span class="sc">%&gt;%</span> </span>
+<span id="cb36-7" class="hljs-ln-code"><a href="#cb36-7"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> svc_spec) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-8" class="hljs-ln-code"><a href="#cb36-8"></a>  <span class="fu">fit_resamples</span>(penguin_cv)</span>
+<span id="cb36-9" class="hljs-ln-code"><a href="#cb36-9"></a></span>
+<span id="cb36-10" class="hljs-ln-code"><a href="#cb36-10"></a>svm_results <span class="ot">&lt;-</span></span>
+<span id="cb36-11" class="hljs-ln-code"><a href="#cb36-11"></a>  penguin_wf <span class="sc">%&gt;%</span> </span>
+<span id="cb36-12" class="hljs-ln-code"><a href="#cb36-12"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> svm_rad_spec) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-13" class="hljs-ln-code"><a href="#cb36-13"></a>  <span class="fu">fit_resamples</span>(penguin_cv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="model-evaluation" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Model evaluation</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-34_543727c161c2a0fcc6e90677f06f6707">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb35-1" class="hljs-ln-code"><a href="#cb35-1"></a><span class="fu">collect_metrics</span>(svc_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-35_c1a0774d2e8270dfefe617084b80063c">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb37-1" class="hljs-ln-code"><a href="#cb37-1"></a><span class="fu">collect_metrics</span>(svc_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="model-evaluation-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Model evaluation</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-35_6260979709f1bb3a5d33a4f58225a82f">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">collect_metrics</span>(svc_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-36_9a2b24e6877daf4312a3c9b3d04b1495">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">collect_metrics</span>(svc_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   .metric  .estimator  mean     n std_err .config             
@@ -900,14 +939,14 @@
 2 roc_auc  binary     0.972     5 0.00644 Preprocessor1_Model1</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-36_8dada32b77cfcb6d98de35836ee85b67">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">collect_metrics</span>(svm_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-37_4d9d275d0d59a798e90659180eb1e3e5">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">collect_metrics</span>(svm_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="model-evaluation-2" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Model evaluation</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-37_7f660d2cda82d7c4fc8023b26571da05">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">collect_metrics</span>(svc_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-38_1620695d236fc6d291356cf9d4c4a530">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">collect_metrics</span>(svc_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   .metric  .estimator  mean     n std_err .config             
@@ -916,8 +955,8 @@
 2 roc_auc  binary     0.972     5 0.00644 Preprocessor1_Model1</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-38_54b3a8822b26fcd9911d6bcc88559d92">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">collect_metrics</span>(svm_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-39_4a3259cee3c5843a1c4114ad71f333dc">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">collect_metrics</span>(svm_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   .metric  .estimator  mean     n std_err .config             
@@ -934,23 +973,23 @@
 </section>
 <section id="fit-svm-for-the-whole-training-data" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Fit SVM for the whole training data</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-39_eabad7427f9a4a8273516117c5e67d5a">
-<div class="sourceCode cell-code" id="cb43" data-code-line-numbers="2-3|4|1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb43-1" class="hljs-ln-code"><a href="#cb43-1"></a>penguin_final <span class="ot">&lt;-</span> </span>
-<span id="cb43-2" class="hljs-ln-code"><a href="#cb43-2"></a>  penguin_wf <span class="sc">%&gt;%</span> </span>
-<span id="cb43-3" class="hljs-ln-code"><a href="#cb43-3"></a>  <span class="fu">add_model</span>(svm_rad_spec) <span class="sc">%&gt;%</span></span>
-<span id="cb43-4" class="hljs-ln-code"><a href="#cb43-4"></a>  <span class="fu">last_fit</span>(penguin_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-40_90ffc07a6e226f9eac1f337e98b85719">
+<div class="sourceCode cell-code" id="cb45" data-code-line-numbers="2-3|4|1"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb45-1" class="hljs-ln-code"><a href="#cb45-1"></a>penguin_final <span class="ot">&lt;-</span> </span>
+<span id="cb45-2" class="hljs-ln-code"><a href="#cb45-2"></a>  penguin_wf <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3" class="hljs-ln-code"><a href="#cb45-3"></a>  <span class="fu">add_model</span>(svm_rad_spec) <span class="sc">%&gt;%</span></span>
+<span id="cb45-4" class="hljs-ln-code"><a href="#cb45-4"></a>  <span class="fu">last_fit</span>(penguin_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="prediction-accuracy-on-testing-data" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Prediction accuracy on testing data</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-40_5d0d053dca4b59e1b8c523e564494f81">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb44-1" class="hljs-ln-code"><a href="#cb44-1"></a><span class="fu">collect_metrics</span>(penguin_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-41_f208c6e2c9e07a75fd846173f70bfc0b">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb46-1" class="hljs-ln-code"><a href="#cb46-1"></a><span class="fu">collect_metrics</span>(penguin_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="prediction-accuracy-on-testing-data-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Prediction accuracy on testing data</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-41_05138eb9312630c078ccafe58c0a3b82">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb45-1" class="hljs-ln-code"><a href="#cb45-1"></a><span class="fu">collect_metrics</span>(penguin_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-42_59b89aa71a78cf6eafe913936ff64dc8">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb47-1" class="hljs-ln-code"><a href="#cb47-1"></a><span class="fu">collect_metrics</span>(penguin_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   .metric  .estimator .estimate .config             
@@ -962,15 +1001,15 @@
 </section>
 <section id="predictions-on-testing-data" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Predictions on testing data</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-42_a56f3e571cc966787c0e1b0971b89450">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb47-1" class="hljs-ln-code"><a href="#cb47-1"></a><span class="fu">collect_predictions</span>(penguin_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-43_f51a87fa7cd2d915709a2d2a32f952b6">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb49-1" class="hljs-ln-code"><a href="#cb49-1"></a><span class="fu">collect_predictions</span>(penguin_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="predictions-on-testing-data-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Predictions on testing data</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-43_875d8ad6da8bdfb37bb67a8c6bbea329">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb48-1" class="hljs-ln-code"><a href="#cb48-1"></a><span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
-<span id="cb48-2" class="hljs-ln-code"><a href="#cb48-2"></a>  <span class="fu">select</span>(<span class="sc">-</span>.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-44_61c9969dd0d23e5c03f0f50f1c98a08a">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb50-1" class="hljs-ln-code"><a href="#cb50-1"></a><span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
+<span id="cb50-2" class="hljs-ln-code"><a href="#cb50-2"></a>  <span class="fu">select</span>(<span class="sc">-</span>.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 101 × 6
    id               .pred_female .pred_male  .row .pred_class sex   
@@ -992,16 +1031,16 @@
 </section>
 <section id="confusion-matrix-on-testing-data" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Confusion matrix on testing data</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-44_5e6d7c5be3cf2960822cc5b1df552617">
-<div class="sourceCode cell-code" id="cb50" data-code-line-numbers="1|2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb50-1" class="hljs-ln-code"><a href="#cb50-1"></a><span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-2" class="hljs-ln-code"><a href="#cb50-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-45_f391bf93881c8e303c653e621837e287">
+<div class="sourceCode cell-code" id="cb52" data-code-line-numbers="1|2"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb52-1" class="hljs-ln-code"><a href="#cb52-1"></a><span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
+<span id="cb52-2" class="hljs-ln-code"><a href="#cb52-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="confusion-matrix-on-testing-data-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Confusion matrix on testing data</h2>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-45_cf6ebc358af805fb865cd51a2f312967">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb51-1" class="hljs-ln-code"><a href="#cb51-1"></a><span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-2" class="hljs-ln-code"><a href="#cb51-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-46_0d19b74c91c2d34375150dfd52006c85">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb53-1" class="hljs-ln-code"><a href="#cb53-1"></a><span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-2" class="hljs-ln-code"><a href="#cb53-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          Truth
 Prediction female male
@@ -1013,21 +1052,21 @@ Prediction female male
 <section id="sanity-check" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Sanity check!</h2>
 <p>Manually calculate accuracy</p>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-46_7a2767d7e99057269b38366caf826553">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb53-1" class="hljs-ln-code"><a href="#cb53-1"></a>M <span class="ot">&lt;-</span> <span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
-<span id="cb53-2" class="hljs-ln-code"><a href="#cb53-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span>
-<span id="cb53-3" class="hljs-ln-code"><a href="#cb53-3"></a></span>
-<span id="cb53-4" class="hljs-ln-code"><a href="#cb53-4"></a>(M<span class="sc">$</span>table[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> M<span class="sc">$</span>table[<span class="dv">2</span>,<span class="dv">2</span>])<span class="sc">/</span><span class="fu">nrow</span>(penguin_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-47_ceb4e1a90bd229d5a7390139261ec5a6">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb55-1" class="hljs-ln-code"><a href="#cb55-1"></a>M <span class="ot">&lt;-</span> <span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2" class="hljs-ln-code"><a href="#cb55-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span>
+<span id="cb55-3" class="hljs-ln-code"><a href="#cb55-3"></a></span>
+<span id="cb55-4" class="hljs-ln-code"><a href="#cb55-4"></a>(M<span class="sc">$</span>table[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> M<span class="sc">$</span>table[<span class="dv">2</span>,<span class="dv">2</span>])<span class="sc">/</span><span class="fu">nrow</span>(penguin_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sanity-check-1" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Sanity check!</h2>
 <p>Manually calculate accuracy</p>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-47_e14dcdd4a0bcb00828122c436ca966fa">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb54-1" class="hljs-ln-code"><a href="#cb54-1"></a>M <span class="ot">&lt;-</span> <span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
-<span id="cb54-2" class="hljs-ln-code"><a href="#cb54-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span>
-<span id="cb54-3" class="hljs-ln-code"><a href="#cb54-3"></a></span>
-<span id="cb54-4" class="hljs-ln-code"><a href="#cb54-4"></a>(M<span class="sc">$</span>table[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> M<span class="sc">$</span>table[<span class="dv">2</span>,<span class="dv">2</span>])<span class="sc">/</span><span class="fu">nrow</span>(penguin_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-48_33da1614bfd0eb9aecb6b1f4e51ca977">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode r hljs"><span id="cb56-1" class="hljs-ln-code"><a href="#cb56-1"></a>M <span class="ot">&lt;-</span> <span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2" class="hljs-ln-code"><a href="#cb56-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span>
+<span id="cb56-3" class="hljs-ln-code"><a href="#cb56-3"></a></span>
+<span id="cb56-4" class="hljs-ln-code"><a href="#cb56-4"></a>(M<span class="sc">$</span>table[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> M<span class="sc">$</span>table[<span class="dv">2</span>,<span class="dv">2</span>])<span class="sc">/</span><span class="fu">nrow</span>(penguin_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9108911</code></pre>
 </div>
@@ -1036,35 +1075,35 @@ Prediction female male
 <section id="sanity-check-2" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Sanity check!</h2>
 <p>Manually calculate accuracy</p>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-48_33da1614bfd0eb9aecb6b1f4e51ca977">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>M <span class="ot">&lt;-</span> <span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
-<span id="cb56-2"><a href="#cb56-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span>
-<span id="cb56-3"><a href="#cb56-3"></a></span>
-<span id="cb56-4"><a href="#cb56-4"></a>(M<span class="sc">$</span>table[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> M<span class="sc">$</span>table[<span class="dv">2</span>,<span class="dv">2</span>])<span class="sc">/</span><span class="fu">nrow</span>(penguin_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-49_0ad446094bd48ea016bafe83c3630850">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>M <span class="ot">&lt;-</span> <span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-2"><a href="#cb58-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span>
+<span id="cb58-3"><a href="#cb58-3"></a></span>
+<span id="cb58-4"><a href="#cb58-4"></a>(M<span class="sc">$</span>table[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> M<span class="sc">$</span>table[<span class="dv">2</span>,<span class="dv">2</span>])<span class="sc">/</span><span class="fu">nrow</span>(penguin_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9108911</code></pre>
 </div>
 </div>
 <p>Collect accuracy</p>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-49_d2aa407d0b1b1db7fbb56922b1096277">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">collect_metrics</span>(penguin_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-50_c92b63e8ed645565744486b147f5a7d9">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">collect_metrics</span>(penguin_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sanity-check-3" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Sanity check!</h2>
 <p>Manually calculate accuracy</p>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-50_8b1745a7091781c82d3c69a14c8db18a">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>M <span class="ot">&lt;-</span> <span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
-<span id="cb59-2"><a href="#cb59-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span>
-<span id="cb59-3"><a href="#cb59-3"></a></span>
-<span id="cb59-4"><a href="#cb59-4"></a>(M<span class="sc">$</span>table[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> M<span class="sc">$</span>table[<span class="dv">2</span>,<span class="dv">2</span>])<span class="sc">/</span><span class="fu">nrow</span>(penguin_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-51_4982971778ad6cc86dcadb4c6708805c">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>M <span class="ot">&lt;-</span> <span class="fu">collect_predictions</span>(penguin_final) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="#cb61-2"></a>  <span class="fu">conf_mat</span>(sex, .pred_class)</span>
+<span id="cb61-3"><a href="#cb61-3"></a></span>
+<span id="cb61-4"><a href="#cb61-4"></a>(M<span class="sc">$</span>table[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> M<span class="sc">$</span>table[<span class="dv">2</span>,<span class="dv">2</span>])<span class="sc">/</span><span class="fu">nrow</span>(penguin_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9108911</code></pre>
 </div>
 </div>
 <p>Collect accuracy</p>
-<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-51_a5517569f0a332800d3ff74edc32f846">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">collect_metrics</span>(penguin_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="talk_cache/revealjs/unnamed-chunk-52_43fe5867225462e5ebf35530d472c2c1">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">collect_metrics</span>(penguin_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   .metric  .estimator .estimate .config             
@@ -1073,6 +1112,10 @@ Prediction female male
 2 roc_auc  binary         0.958 Preprocessor1_Model1</code></pre>
 </div>
 </div>
+</section>
+<section id="back-to-the-presentation" class="slide level2">
+<h2>Back to the presentation</h2>
+<p><a href="https://docs.google.com/presentation/d/1-aSkGoqPZzeu9ebR2GbxzRYR-kK0yPFA/edit#slide=id.p86" data-auto-animate="true">Summary slide</a></p>
 
 <img src="profil_circle.png" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://turalsadigov.github.io/" class="uri">https://turalsadigov.github.io/</a></p>

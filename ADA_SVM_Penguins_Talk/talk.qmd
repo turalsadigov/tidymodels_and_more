@@ -39,7 +39,6 @@ format:
 
 [https://rpubs.com/tsadigov/ada_svm_penguins_2022](https://rpubs.com/tsadigov/ada_svm_penguins_2022){auto-animate="true"}
 
-
 # Data : [palmer penguins](https://allisonhorst.github.io/palmerpenguins/) {auto-animate="true"}
 
 ::: {style="text-align: center; margin-top: 1em"}
@@ -360,13 +359,48 @@ Lets see Support Vector Machines in action to predict the gender of a penguin.
 ## Drop `island` and load `tidymodels` {auto-animate="true"}
 
 ```{r}
-#| code-line-numbers: "2-3|4|1|5"
+#| code-line-numbers: "2-3|4|1|5|7|8|9"
+#| eval: false
 penguins_df <- 
   penguins %>% 
   drop_na() %>% 
   select(-island)
 library(tidymodels)
+
+set.seed(123)
+penguins_df %>% 
+  sample_n(10)
 ```
+
+## Drop `island` and load `tidymodels` {auto-animate="true"}
+
+```{r}
+penguins_df <- 
+  penguins %>% 
+  drop_na() %>% 
+  select(-island)
+library(tidymodels)
+
+set.seed(123)
+penguins_df %>% 
+  sample_n(10)
+```
+
+## 
+
+![](1.png){fig-align="center"}
+
+## 
+
+![](2.png)
+
+## 
+
+![](3.png)
+
+## 
+
+![](4.png){fig-align="center"}
 
 ## Split the data {auto-animate="true"}
 
@@ -467,15 +501,13 @@ penguin_wf <-
 svc_results <-
   penguin_wf %>% 
   add_model(spec = svc_spec) %>% 
-  fit_resamples(penguin_cv, 
-                control = control_resamples(save_pred = T, 
-                                            verbose = T))
+  fit_resamples(penguin_cv)
 ```
 
 ## Workflows (i.e., ML pipeline) and model fitting {auto-animate="true"}
 
 ```{r}
-#| code-line-numbers: "14"
+#| code-line-numbers: "12"
 #| eval: false
 penguin_wf <- 
   workflow() %>% 
@@ -484,16 +516,12 @@ penguin_wf <-
 svc_results <-
   penguin_wf %>% 
   add_model(spec = svc_spec) %>% 
-  fit_resamples(penguin_cv, 
-                control = control_resamples(save_pred = T, 
-                                            verbose = T))
+  fit_resamples(penguin_cv)
 
 svm_results <-
   penguin_wf %>% 
   add_model(spec = svm_rad_spec) %>% 
-  fit_resamples(penguin_cv, 
-                control = control_resamples(save_pred = T, 
-                                            verbose = T))
+  fit_resamples(penguin_cv)
 ```
 
 ## Workflows (i.e., ML pipeline) and model fitting {auto-animate="true"}
@@ -507,16 +535,12 @@ penguin_wf <-
 svc_results <-
   penguin_wf %>% 
   add_model(spec = svc_spec) %>% 
-  fit_resamples(penguin_cv, 
-                control = control_resamples(save_pred = T, 
-                                            verbose = T))
+  fit_resamples(penguin_cv)
 
 svm_results <-
   penguin_wf %>% 
   add_model(spec = svm_rad_spec) %>% 
-  fit_resamples(penguin_cv, 
-                control = control_resamples(save_pred = T, 
-                                            verbose = T))
+  fit_resamples(penguin_cv)
 ```
 
 ## Model evaluation {auto-animate="true"}
@@ -659,3 +683,7 @@ Collect accuracy
 ```{r}
 collect_metrics(penguin_final)
 ```
+
+## Back to the presentation
+
+[Summary slide](https://docs.google.com/presentation/d/1-aSkGoqPZzeu9ebR2GbxzRYR-kK0yPFA/edit#slide=id.p86){auto-animate="true"}
